@@ -1,0 +1,15 @@
+.heading{
+    text-align: center;
+    font-size: xx-large;
+}
+.updateBtn{
+    float:right
+}
+.Hregdiv{
+    background-image: url("https://www.teahub.io/photos/full/208-2080455_clean-abstract-background-wallpapers-best-background-for-forms.jpg");
+    height:100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}

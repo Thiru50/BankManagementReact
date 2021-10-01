@@ -1,0 +1,15 @@
+.headtitle{
+    text-align: center;
+    font-size: xx-large;
+    color:white;
+    font-family: bolder;
+    background-color: rgb(98, 208, 245);
+}
+.login{
+    float:right;
+    color: yellow;
+    width: 100px;
+    margin-right: 40px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}

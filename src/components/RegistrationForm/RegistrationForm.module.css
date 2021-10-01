@@ -1,0 +1,55 @@
+.loginText {
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.successMessage {
+    color: green;
+    font-weight: bold;
+}
+.myform{
+    height:100px;
+    margin-top :30px;
+    float: left;
+    width: 100%;
+}
+.mycol{
+    float:right;
+}
+label{
+    float: left;
+}
+.btnLogin{
+    float:right;
+    margin-top: 20px;
+    width: 100px;
+}
+.already{
+    margin-top: 20px;
+    margin-right: 20px;
+}
+.my-f-row{
+    float: right;
+}
+
+.regdiv{
+     background-image: url("https://www.teahub.io/photos/full/208-2080455_clean-abstract-background-wallpapers-best-background-for-forms.jpg"); 
+    height:100%;
+    background-color: lightblue;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+
+} 
+.regcontainer{
+   
+}
+small{
+    background-color: white;
+    padding: 4px;
+    border-radius: 3px;
+    font-weight: bold;
+    margin-top: 4px;
+}

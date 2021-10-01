@@ -1,0 +1,26 @@
+.btnLogin{
+    float:right;
+    margin-top: 20px;
+    
+}
+.already{
+    margin-top: 20px;
+    margin-right: 20px;
+    color:yellow
+}
+.Pregdiv{
+    background-image: url("https://www.teahub.io/photos/full/208-2080455_clean-abstract-background-wallpapers-best-background-for-forms.jpg");
+    height:100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+
+}
+small{
+    background-color: white;
+    padding: 4px;
+    border-radius: 3px;
+    font-weight: bold;
+    margin-top: 4px;
+}
