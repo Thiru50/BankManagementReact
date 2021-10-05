@@ -1,45 +1,45 @@
 import React, {useState} from 'react';
 import './UpdateDetails.css';
-import UpdateSuccessfulPopup from '../popup/UpdateSuccessfulPopup';
+import SuccessPopup from '../popup/SuccessPopup/SuccessPopup';
 import { withRouter } from "react-router-dom";
 import Button from '@material-ui/core/Button'
 import { ImPencil} from "react-icons/im";
 import Loading from '../Loading/Loading';
 import NavBar from '../NavBar/NavBar';
+import axios from 'axios';
 function UpdateDetails(props) {
+    const message="Details updated successfully!!"
     var date=new Date().toISOString().substr(0,10);
     let isRequired=true;
     const [buttonPopup,setButtonPopup]=useState(false);
     const [loading,setLoading]=useState(false)
     const [state , setState] = useState({
-        name:null,
-        userName:null,
-        customerId:null,
-        accNumber:null,
-        password:null,
-        gender:"male",   
-        guardianType:"Relative",  
-        guardianName:null,
-        address:null,
-        citizenship:null,
-        state:null,
-        country:null,
-        email:null,
-        maritalStatus:"single",
-        contactNumber:null,
-        dob:null,
+        name:window.localStorage.getItem("firstName"),
+        userName:window.localStorage.getItem("lastName"),
+        customerId:window.localStorage.getItem("customerId"),
+        accNumber:window.localStorage.getItem("accountNumber"),
+        password:window.localStorage.getItem("password"),
+        gender:window.localStorage.getItem("gender"),   
+        guardianType:window.localStorage.getItem("guardianType"),  
+        guardianName:window.localStorage.getItem("guardianName"),
+        address:window.localStorage.getItem("address"),
+        citizenship:window.localStorage.getItem("citizenship"),
+        state:window.localStorage.getItem("state"),
+        country:window.localStorage.getItem("country"),
+        email:window.localStorage.getItem("email"),
+        maritalStatus:window.localStorage.getItem("maritalStatus"),
+        contactNumber:window.localStorage.getItem("contactNumber"),
+        dob:window.localStorage.getItem("dob"),
         registrationDate:date,
-        accountType:"savings",
-        branchName:null,
-        citizenStatus:null,
-        ida :null,
-        documentType :"aadhar",
-        idn :null,
-        accHolderName:null,
-        accHolderNumber:null,
-        accHolderAddress:null,
-        checkid:false,
-        text:"hjkl",
+        accountType:window.localStorage.getItem("accountType"),
+        branchName:window.localStorage.getItem("branchName"),
+        citizenStatus:window.localStorage.getItem("citizenStatus"),
+        ida :window.localStorage.getItem("ida"),
+        documentType :window.localStorage.getItem("documentType"),
+        idn :window.localStorage.getItem("idn"),
+        accHolderName:window.localStorage.getItem("accHolderName"),
+        accHolderNumber:window.localStorage.getItem("accHolderNumber"),
+        accHolderAddress:window.localStorage.getItem("accHolderAddress"),
     })
     const redirectToLogin = () => {
         props.history.push('/login'); 
@@ -53,10 +53,53 @@ function UpdateDetails(props) {
     } 
     const submitHandler=(event)=>{
         event.preventDefault();
-        // if((nameValidate())&&(passwordValidate())&&(guardianNameValidate())
-        // &&(stateValidate())&&(countryValidate())&&(addressValidate())&&(emailValidate)
-        // &&(citizenStatusValidate))
-        console.log(state);
+        if((nameValidate())&&(passwordValidate())&&(guardianNameValidate())
+        &&(stateValidate())&&(countryValidate())&&(addressValidate())&&(emailValidate())
+        &&(branchNameValidate())&&(citizenshipValidate())
+        &&(accHolderNameValidate())&&(accHolderAddressValidate())&&(accHolderNumberValidate())
+        &&(contactNumberValidate())&&(UserNameValidate())&&(idnValidate())){
+            console.log("https://localhost:44331/api/UserDetails/"+window.localStorage.getItem("customerId"))
+            axios.put("https://localhost:44331/api/UserDetails/"+window.localStorage.getItem("customerId"),{
+                customerId:window.localStorage.getItem("customerId"),
+                firstName:state.name,
+                lastName:state.userName,
+                accountNumber:window.localStorage.getItem("accountNumber"),
+                password:state.password,
+                address:state.address,
+                citizenship:state.citizenship,
+                country:state.country,
+                state:state.state,
+                email:state.email,
+                maritalStatus:state.maritalStatus,
+                contactNumber:state.contactNumber,
+                accountType:state.accountType,
+                branchName:state.branchName,
+                guardianType:state.guardianType,
+                guardianName:state.guardianName,
+                documentType:state.documentType,
+                ida:state.ida,
+                idn:state.idn,
+                accHolderName:state.accHolderName,
+                accHolderAddress:state.accHolderAddress,
+                accHolderNumber:state.accHolderNumber,
+                gender:window.localStorage.getItem("gender"),
+                dob:window.localStorage.getItem("dob"),
+                registrationDate:window.localStorage.getItem("registrationDate"),
+                citizenStatus:window.localStorage.getItem("citizenStatus")
+            }).then((response)=>{
+                console.log(response.data.customerId)
+            }).catch(function (error)
+            {   
+                if(error.request){
+                     console.log(error);
+                    props.history.push('/error')
+                    console.log("server not reponsed")
+                }
+                else{
+                    console.log("something happened")
+                }
+            });
+        }
         setButtonPopup(true)
     }
     const nameValidate=()=>{
@@ -76,7 +119,7 @@ function UpdateDetails(props) {
             return true;
         }
         return false;
-    }
+    } 
     const guardianNameValidate=()=>{
         if(state.guardianName.search(/[^A-Za-z\s]/) !== -1){
             return false
@@ -231,35 +274,23 @@ function UpdateDetails(props) {
                              className="form-control" 
                              placeholder="Name"
                              required={isRequired}
+                             style={{"backgroundColor":"darkgrey","color":"white"}}
                              disabled
                               />
-                              {(state.name==null)
-                               ? null
-                               : ((state.name.trim()=="")
-                               ? (<small style={{"color":"red"}}>Name should not be Empty</small>)
-                               : ((nameValidate()
-                               ? (<small style={{"color":"green"}}>Looks good!</small>)
-                               : (<small style={{"color":"red"}}>Name should contain only letters</small>)
-                               )))} 
+                            
                         </div>
                         
                     </div>
                     <div className="col-lg-3 my-col">
                         <div className="form-group">
-                            <label style={{"color":"white"}} for="userName">User&nbsp;Name</label>
+                            <label style={{"color":"white"}} for="userName">Last&nbsp;Name</label>
                             <input type="text"  name="userName" id="userName" className="form-control"
                              value={state.userName} onChange={handleChange}
-                             placeholder="User name"
+                             placeholder="Last name"
                              value={state.userName} onChange={handleChange}
-                             required={isRequired}/>
-                             {(state.userName==null)
-                               ? null
-                               : ((state.userName.trim()=="")
-                               ? (<small style={{"color":"red"}}>User name should not be Empty</small>)
-                               : ((UserNameValidate()
-                               ? (<small style={{"color":"green"}}>Looks good!</small>)
-                               : (<small style={{"color":"red"}}>User Name should contain only letters</small>)
-                               )))}
+                             required={isRequired} style={{"backgroundColor":"darkgrey","color":"white"}}
+                             disabled/>
+                             
                             
                         </div>
                     </div>
@@ -270,7 +301,7 @@ function UpdateDetails(props) {
                             value={state.password} onChange={handleChange}
                             required={isRequired}
                              id="password" className="form-control" placeholder="Password" required={isRequired}/>
-                              {(state.password==null)
+                              {(state.password==null||state.password==window.localStorage.getItem("password"))
                                ? null
                                : ((state.password.trim()=="")
                                ? (<small style={{"color":"red"}}>Password should not be Empty</small>)
@@ -283,7 +314,8 @@ function UpdateDetails(props) {
                     <div className="col-lg-3 my-col">
                         <div className="form-group">
                             <label style={{"color":"white"}} for="gender">Gender</label>
-                            <select name="gender" id="gender" value={state.gender} onChange={handleChange} className="form-control">
+                            <select name="gender" id="gender" value={state.gender} style={{"backgroundColor":"darkgrey","color":"white"}}
+                             onChange={handleChange} className="form-control" disabled>
                                 <option value="male">Male</option>
                                 <option value="female">female</option>
                             </select>
@@ -297,7 +329,7 @@ function UpdateDetails(props) {
                             <input type="number" name="customerId" id="customerId" 
                             value={state.customerId} onChange={handleChange} 
                             className="form-control" placeholder="Customer Id"
-                            required={isRequired}disabled /> 
+                            required={isRequired}disabled style={{"backgroundColor":"darkgrey","color":"white"}} /> 
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
@@ -306,7 +338,7 @@ function UpdateDetails(props) {
                             <input type="number" name="accNumber" id="accNumber" 
                             value={state.accNumber} onChange={handleChange} 
                             className="form-control" placeholder="Account Number"
-                            required={isRequired}disabled /> 
+                            required={isRequired}disabled  style={{"backgroundColor":"darkgrey","color":"white"}}/> 
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
@@ -315,7 +347,7 @@ function UpdateDetails(props) {
                             <input type="text" name="address" id="address"
                              value={state.address} onChange={handleChange} 
                              className="form-control" placeholder="Address" required={isRequired}/>
-                             {(state.address==null)
+                             {(state.address==null||state.address==window.localStorage.getItem("address"))
                                ? null
                                : ((addressValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -330,7 +362,7 @@ function UpdateDetails(props) {
                             id="citizenship" value={state.citizenship}
                              onChange={handleChange} className="form-control" 
                              placeholder="CitizenShip" required={isRequired}/>
-                             {(state.citizenship==null)
+                             {(state.citizenship==null||state.citizenship==window.localStorage.getItem("citizenship"))
                                ? null
                                : ((state.citizenship.trim()=="")
                                ? (<small style={{"color":"red"}}>Citizenship should not be Empty</small>)
@@ -350,7 +382,7 @@ function UpdateDetails(props) {
                              id="country" value={state.country} 
                              onChange={handleChange} className="form-control"
                               placeholder="Country" required={isRequired}/>
-                              {(state.country==null)
+                              {(state.country==null||state.country==window.localStorage.getItem("country"))
                                ? null
                                : ((state.country.trim()=="")
                                ? (<small style={{"color":"red"}}> Country should not be Empty</small>)
@@ -366,7 +398,7 @@ function UpdateDetails(props) {
                             <input type="text" name="state" id="state"
                              value={state.state} onChange={handleChange} 
                              className="form-control" placeholder="State" required={isRequired}/>
-                             {(state.state==null)
+                             {(state.state==null||state.state==window.localStorage.getItem("state"))
                                ? null
                                : ((state.state.trim()=="")
                                ? (<small style={{"color":"red"}}> State should not be Empty</small>)
@@ -383,7 +415,7 @@ function UpdateDetails(props) {
                             <input type="text" name="email" id="email" 
                             value={state.email} onChange={handleChange} 
                             className="form-control" placeholder="E-Mail" required={isRequired}/>
-                            {(state.email==null)
+                            {(state.email==null||state.email==window.localStorage.getItem("email"))
                                ? null
                                : ((state.email.trim()=="")
                                ? (<small style={{"color":"red"}}> Email should not be Empty</small>)
@@ -412,7 +444,7 @@ function UpdateDetails(props) {
                              id="contactNumber" value={state.contactNumber} 
                              onChange={handleChange} className="form-control"
                               placeholder="Contact number" required={isRequired} />
-                              {(state.contactNumber==null)
+                              {(state.contactNumber==null||state.contactNumber==window.localStorage.getItem("contactNumber"))
                                ? null
                                : ((state.contactNumber.trim()=="")
                                ? (<small style={{"color":"red"}}>Contact number should not be Empty</small>)
@@ -427,21 +459,16 @@ function UpdateDetails(props) {
                             <label style={{"color":"white"}} for="dob">Date of birth</label>
                             <input type="date" name="dob" id="dob" 
                             value={state.dob} onChange={handleChange} 
-                            className="form-control" max={date} required={isRequired} disabled/>
-                            {(state.dob==null)
-                               ? null
-                               : ((state.dob=="")
-                               ? (<small style={{"color":"red"}}>Date of Birth should not be Empty</small>)
-                               : ((dobValidate()
-                               ? (<small style={{"color":"green"}}>Looks good!</small>)
-                               : (<small style={{"color":"red"}}>Age should between 18 and 96</small>)
-                               )))}
+                            className="form-control" max={date} required={isRequired} style={{"backgroundColor":"darkgrey","color":"white"}} disabled/>
+                            
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
                         <div className="form-group">
                             <label style={{"color":"white"}} for="registrationDate">Registration Date</label>
-                            <input type="date" name="registrationDate" id="registrationDate" defaultValue={date} className="form-control" disabled/>
+                            <input type="date" name="registrationDate" id="registrationDate" defaultValue={date} className="form-control"
+                            style={{"backgroundColor":"darkgrey","color":"white"}}
+                             disabled/>
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
@@ -462,7 +489,7 @@ function UpdateDetails(props) {
                             id="branchName" value={state.branchName} 
                             onChange={handleChange} className="form-control" 
                             placeholder="Branch Name" required={isRequired}/>
-                            {(state.branchName==null)
+                            {(state.branchName==null||state.branchName==window.localStorage.getItem("branchName"))
                                ? null
                                : ((state.branchName.trim()=="")
                                ? (<small style={{"color":"red"}}>Branch name should not be Empty</small>)
@@ -488,7 +515,7 @@ function UpdateDetails(props) {
                             value={state.guardianName} onChange={handleChange} 
                             className="form-control" placeholder="Guardian Name"
                             required={isRequired} />
-                            {(state.guardianName==null)
+                            {(state.guardianName==null||state.guardianName==window.localStorage.getItem("guardianName"))
                                ? null
                                : ((state.guardianName.trim()=="")
                                ? (<small style={{"color":"red"}}> Guardian name should not be Empty</small>)
@@ -520,7 +547,8 @@ function UpdateDetails(props) {
                             id="idn" className="form-control" 
                             value={state.idn} onChange={handleChange} 
                             placeholder="Document number" required={isRequired}/>
-                             {(state.idn==null)
+                             {(state.idn==null||(state.idn==window.localStorage.getItem("idn")&&
+                             (state.documentType==window.localStorage.getItem("documentType"))))
                                ? null
                                : ((state.idn.trim()=="")
                                ? (<small style={{"color":"red"}}>Identification document number should not be Empty</small>)
@@ -536,8 +564,8 @@ function UpdateDetails(props) {
                             <input type="text" name="accHolderName"
                              id="accHolderName" className="form-control"
                             value={state.accHolderName} onChange={handleChange}
-                             placeholder="Reference account holder Name" required={isRequired} disabled/>
-                             {(state.accHolderName==null)
+                             placeholder="Reference account holder Name" required={isRequired}/>
+                             {(state.accHolderName==null||state.accHolderName==window.localStorage.getItem("accHolderName"))
                                ? null
                                : ((state.accHolderName.trim()=="")
                                ? (<small style={{"color":"red"}}>Account holder name should not be Empty</small>)
@@ -553,8 +581,8 @@ function UpdateDetails(props) {
                             <input type="number" name="accHolderNumber"
                              id="accHolderNumber" value={state.accHolderNumber} 
                              onChange={handleChange} className="form-control" 
-                             placeholder="Reference account holder Number" required={isRequired} disabled/>
-                             {(state.accHolderNumber==null)
+                             placeholder="Reference account holder Number" required={isRequired} />
+                             {(state.accHolderNumber==null||state.accHolderNumber==window.localStorage.getItem("accHolderNumber"))
                                ? null
                                : ((state.accHolderNumber.trim()=="")
                                ? (<small style={{"color":"red"}}>Account holder number should not be Empty</small>)
@@ -570,8 +598,8 @@ function UpdateDetails(props) {
                             <input type="text" name="accHolderAddress"
                              id="accHolderAddress" value={state.accHolderAddress}
                               onChange={handleChange} className="form-control" 
-                              placeholder="Reference account holder address" required={isRequired} disabled/>
-                              {(state.accHolderAddress==null)
+                              placeholder="Reference account holder address" required={isRequired}/>
+                              {(state.accHolderAddress==null||state.accHolderAddress==window.localStorage.getItem("accHolderAddress"))
                                ? null
                                : ((state.accHolderAddress.trim()=="")
                                ? (<small style={{"color":"red"}}>Account holder address should not be Empty</small>)
@@ -597,9 +625,9 @@ function UpdateDetails(props) {
                 </div>
                 </div> 
                 <div>
-                    <UpdateSuccessfulPopup trigger={buttonPopup}>
+                    <SuccessPopup message={message} trigger={buttonPopup}>
                     
-                    </UpdateSuccessfulPopup>
+                    </SuccessPopup>
                         
                     </div>
                  

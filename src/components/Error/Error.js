@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import './Error.css'
 function Error() {
     return ((
-        <div >
+        <div className="Erdiv" >
         <section class="page_404">
     <div class="container">
       <div class="row"> 

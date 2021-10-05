@@ -1,7 +1,7 @@
 import React,{useState}from 'react'
 import './PersonalLoan.css'
 import { withRouter } from "react-router-dom";
-import PersonalLoanSuccess from '../popup/PersonalLoanSuccess/PersonalLoanSuccess';
+import SuccessPopup from '../popup/SuccessPopup/SuccessPopup';
 import axios from 'axios';
 
 import Loading from '../Loading/Loading';
@@ -9,17 +9,18 @@ import NavBar from '../NavBar/NavBar';
 import Button from '@material-ui/core/Button'
 import { BiUpload} from "react-icons/bi";
 function PersonalLoan(props) {
+    const message="Personal Loan form submitted!!"
     const [perLoanButtonPopup,setPerButtonPopup]=useState(false);
     let isRequired=true;
     var date=new Date().toISOString().substr(0,10);
     var loanIssueDate=new Date(Date.now() +  7 * 24 * 60 * 60 * 1000).toISOString().substr(0,10);
     const [perLoanDetails,setPerLoanDetails]=useState({
-        firstName:null,
-        customerId:"",
+        firstName:window.localStorage.getItem("firstName"),
+        customerId:window.localStorage.getItem("customerId"),
         loanAmount:null,
         loanApplyDate:date,
         loanIssueDate:loanIssueDate,
-        rateOfInterest:null,
+        rateOfInterest:8,
         durationOfLoan:"5",
         companyName:null,
         designation:null,
@@ -40,12 +41,12 @@ function PersonalLoan(props) {
      const [loading,setLoading]=useState(false)
     const submitHandler=(event)=>{
         event.preventDefault();
-        if((loanAmountValidate())&&(rateOfInterestValidate())&&(companyNameValidate())&&(designationValidate())&&
+        if((loanAmountValidate())&&(companyNameValidate())&&(designationValidate())&&
         (totalExperienceValidate())&&(experienceInCurrentCompanyValidate())&&(annualIncomeValidate))
         {       
                 setLoading(true)
                 axios.post("https://localhost:44313/api/PersonalLoans",{
-                customerId:0,
+                customerId:window.localStorage.getItem("customerId"),
                 firstName:perLoanDetails.firstName,
                
                 loanAmount:perLoanDetails.loanAmount,
@@ -63,6 +64,7 @@ function PersonalLoan(props) {
             }).then((response)=>{
                 setPerButtonPopup(true)
                 console.log(perLoanDetails);
+                setLoading(false)
             }).catch(function (error)
             {   
                 setLoading(false)
@@ -131,8 +133,6 @@ function PersonalLoan(props) {
         <div className="Pregdiv">
         <div style={{
                 "margin":"0 50px",
-                
-
         }}>
             <div className="row">
             <div className="col">
@@ -143,7 +143,7 @@ function PersonalLoan(props) {
             <div  className="col ">
                 <div className="d-flex justify-content-end align-items-center">
             <span className="already">{eLoan}</span>
-            <button 
+            <button  
                     type="submit" 
                     className="btn btn-primary btnLogin"
                     style={{"width": "160px"}}
@@ -163,7 +163,7 @@ function PersonalLoan(props) {
                              id="firstName"
                              className="form-control" 
                              placeholder="First Name"
-                             required={isRequired}
+                             required={isRequired} style={{"backgroundColor":"darkgrey","color":"white"}}
                              disabled
                               />
                         </div>
@@ -193,7 +193,7 @@ function PersonalLoan(props) {
                             value={perLoanDetails.customerId} onChange={handleChange}
                             required={isRequired}
                              id="customerId" className="form-control" placeholder="customerId"
-                              required={isRequired} disabled/>
+                              required={isRequired} style={{"backgroundColor":"darkgrey","color":"white"}} disabled/>
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
@@ -219,7 +219,7 @@ function PersonalLoan(props) {
                         <div className="form-group">
                             <label style={{"color":"white"}} for="loanApplyDate">Loan apply Date</label>
                             <input type="date" name="loanApplyDate" id="loanApplyDate" 
-                            defaultValue={date} className="form-control" disabled/>
+                            defaultValue={date} className="form-control" style={{"backgroundColor":"darkgrey","color":"white"}} disabled/>
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
@@ -228,25 +228,18 @@ function PersonalLoan(props) {
                             <input type="date" name="loanIssueDate" id="loanIssueDate" 
                             value={perLoanDetails.loanIssueDate} onChange={handleChange} 
                             className="form-control"  required={isRequired}
-                            disabled/>
+                            disabled style={{"backgroundColor":"darkgrey","color":"white"}}/>
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
 
                     <div className="form-group">
                             <label style={{"color":"white"}} for="rateOfInterest">Rate of Interst in Percentage</label>
-                            <input type="number" name="rateOfInterest"
+                            <input type="text" name="rateOfInterest"
                              id="rateOfInterest" value={perLoanDetails.rateOfInterest} 
                              onChange={handleChange} className="form-control"
-                              placeholder="Rate of interest" required={isRequired} />
-                              {(perLoanDetails.rateOfInterest==null)
-                               ? null
-                               : ((perLoanDetails.rateOfInterest.trim()=="")
-                               ? (<small style={{"color":"red"}}>Rate of interest should not be Empty</small>)
-                               : ((rateOfInterestValidate()
-                               ? (<small style={{"color":"green"}}>Looks good!</small>)
-                               : (<small style={{"color":"red"}}>It should be greater than 2 and lesser than 100</small>)
-                               )))}
+                              placeholder="Rate of interest" required={isRequired} style={{"backgroundColor":"darkgrey","color":"white"}} disabled />
+                             
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
@@ -346,9 +339,9 @@ function PersonalLoan(props) {
                 >Submit</Button>
 
                     </div>
-                    <PersonalLoanSuccess trigger={perLoanButtonPopup}>
+                    <SuccessPopup message={message} trigger={perLoanButtonPopup}>
                     
-                    </PersonalLoanSuccess>
+                    </SuccessPopup>
                 </div>  
             </form>
             </div>

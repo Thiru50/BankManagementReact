@@ -1,0 +1,26 @@
+.loginText{
+    color:blue;
+    cursor: pointer;
+}
+
+
+.Ilogincont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 600px;
+}
+.Iformdiv{
+    margin: 20px;
+}
+.Idiv{
+    background-image: url("https://cdn.wallpapersafari.com/82/76/PlbVW3.gif");
+    height:100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
+.Ibox{
+    background-color: wheat;
+}

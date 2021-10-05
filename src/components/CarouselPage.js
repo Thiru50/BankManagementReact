@@ -5,7 +5,7 @@ const CarouselPage=()=> {
     <div>
     <Carousel
     pause={false}
-    interval={2300}
+    interval={1500}
     controls={false} 
     indicators={false}
     >

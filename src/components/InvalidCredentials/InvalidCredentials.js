@@ -1,13 +1,15 @@
-
-import React from 'react'
-import { Link, withRouter } from "react-router-dom";
+import React,{useHistory} from 'react'
+import './InvalidCredentials.css'
 import Button from '@material-ui/core/Button'
 import VpnKey from '@material-ui/icons/VpnKey'
-import  './Test.css'
-import { red } from '@material-ui/core/colors';
-
-
-function Test(props) {
+import { Link, withRouter } from "react-router-dom";
+function InvalidCredentials(props) {
+   const redirectToLogin=()=>{
+       props.history.push("/login")
+   }
+    const redirectToRegister=()=>{
+        props.history.push("/register")
+    }
     return (
         <div className="Idiv">
         <div className="Ilogincont">
@@ -47,7 +49,7 @@ function Test(props) {
             color="primary"
               type="submit" 
               endIcon={<VpnKey/>}
-              onClick={()=>props.history.push('/login')}
+              onClick={()=>redirectToLogin()}
           >Login</Button>
           <Button 
           style={{
@@ -57,7 +59,7 @@ function Test(props) {
             variant="contained"
             color="primary"
               type="submit" 
-              onClick={()=>props.history.push('/register')}
+              onClick={()=>redirectToRegister()}
           >Register</Button>
          </div>
      </div>
@@ -68,5 +70,4 @@ function Test(props) {
     )
 }
 
-
-export default withRouter(Test)
+export default withRouter(InvalidCredentials);

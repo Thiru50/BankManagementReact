@@ -5,7 +5,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button'
 import VpnKey from '@material-ui/icons/VpnKey'
 import { BiUpload} from "react-icons/bi";
-function RegistrationForm(props) {
+function RegistrationForm(props)  {
     var date=new Date().toISOString().substr(0,10);
     let isRequired=true;
 
@@ -59,6 +59,7 @@ function RegistrationForm(props) {
             axios.post("https://localhost:44331/api/UserDetails",{
                 firstName:state.firstName,
                 lastName:state.lastName,
+                password:state.password,
                 gender:state.gender,
                 guardianType:state.guardianType,
                 guardianName:state.guardianName,
@@ -106,7 +107,7 @@ function RegistrationForm(props) {
             return true
         }
         return false
-    }
+    } 
     const lastNameValidate=()=>{
         if((state.lastName!=null) &&(state.lastName.search(/[^A-Za-z\s]/) === -1)){
             return true
@@ -164,7 +165,7 @@ function RegistrationForm(props) {
     const accHolderNameValidate=()=>{
         if((state.accHolderName!=null)&&(state.accHolderName.search(/[^A-Za-z\s]/) === -1)){
             return true
-        }
+        } 
         return false
     }
     const accHolderAddressValidate=()=>{
@@ -245,7 +246,7 @@ function RegistrationForm(props) {
     return(
         <div className={r.regdiv}>
             <div style={{
-                "margin":"20px 80px",
+                "margin":"1px 80px",
                 
 
         }}>
@@ -273,7 +274,7 @@ function RegistrationForm(props) {
         
         <form className={`was-validated ${r.myform}`} onSubmit={submitHandler}>
                 <div className="row my-row">
-                    <div className="col-lg-3 my-col "> 
+                    <div className="col-lg-3 my-col"> 
                         <div className="form-group"> 
                         
                             <label style={{"color":"white"}} style={{"color":"white"}} for="firstName">First Name</label>

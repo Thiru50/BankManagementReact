@@ -12,6 +12,7 @@ function Home(props) {
         props.history.push('/UpdateDetails'); 
     }
     const redirectToApplyingLoan = () => {
+        console.log(props.history.location.pathname)
         setLoanButtonPopup(true)
     }
     // const fun=()=>{ 

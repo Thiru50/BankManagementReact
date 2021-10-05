@@ -1,6 +1,6 @@
 .Uregdiv{
     background-image: url("https://www.teahub.io/photos/full/208-2080455_clean-abstract-background-wallpapers-best-background-for-forms.jpg");
-    height:100%;
+    height:110%;
     position: absolute;
     left: 0;
     width: 100%;
@@ -12,6 +12,5 @@ small{
     padding: 4px;
     border-radius: 3px;
     font-weight: bold;
-    
     margin-top: 4px;
 }

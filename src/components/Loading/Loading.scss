@@ -4,9 +4,15 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background-color: lightgray;
 }
-
+.Ldiv{
+    background-color: lightgrey;
+    height:100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
 .wrapper {
   position: absolute;
   left: 50%;
@@ -14,14 +20,14 @@
   margin: -100px;
   width: 200px;
   height: 200px;
-  background-color: lightgray;
+  background-color: transparent;
   border: none;
   -webkit-user-select: none;
 }
 .wrapper .box-wrap {
   width: 70%;
   height: 70%;
-  margin: calc((100% - 70%) / 2) calc((100% - 70%) / 2);
+  margin: calc((100% - 70%)/2) calc((100% - 70%)/2);
   position: relative;
   transform: rotate(-45deg);
 }
@@ -32,7 +38,7 @@
   left: 0;
   top: 0;
   background: rgba(135, 0, 0, 0.6);
-  background: linear-gradient(to right, #141562, #486fbc, #eab5a1, #8dd6ff, #4973c9, #d07ca7, #f4915e, #f5919e, #b46f89, #141562, #486fbc);
+  background: linear-gradient(to right, #141562, #486FBC, #EAB5A1, #8DD6FF, #4973C9, #D07CA7, #F4915E, #F5919E, #B46F89, #141562, #486FBC);
   background-position: 0% 50%;
   background-size: 1000% 1000%;
   visibility: hidden;

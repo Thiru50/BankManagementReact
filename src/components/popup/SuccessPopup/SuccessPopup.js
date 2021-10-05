@@ -1,7 +1,8 @@
 import React,{useState} from 'react'
-import './PersonalLoanSuccess.css'
+import './SuccessPopup.css'
 import { withRouter } from "react-router-dom";
-function PersonalLoanSuccess(props) {
+import { lightBlue } from '@material-ui/core/colors';
+function SuccessPopup(props) {
     const redirectToHome = () => {
         props.history.push('/home'); 
     }
@@ -9,8 +10,9 @@ function PersonalLoanSuccess(props) {
         <div>
             <div className="popup">
                 <div className="popup-inner">
-                <h3 style={{"color":"white"}}>Personal Loan form submitted!!</h3><br></br>
+                <h3 style={{"color":"yellow"}}>{props.message}</h3><br></br>
                     <button className="btn btn-primary close-btn"
+                    style={{"backgroundColor":lightBlue}}
                     onClick={()=>redirectToHome()}
                     >Back to home</button>
                     {props.children}
@@ -19,5 +21,4 @@ function PersonalLoanSuccess(props) {
         </div>
     ):"";
 }
-
-export default withRouter(PersonalLoanSuccess)
+export default withRouter(SuccessPopup)

@@ -1,14 +1,15 @@
 import React,{useState} from 'react'
 import './EducationalLoan.css'
 import { withRouter } from "react-router-dom";
-import EducationalLoanSuccess from '../popup/EducationalLoanSuccess/EducationalLoanSuccess';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
 import NavBar from '../NavBar/NavBar';
 import Button from '@material-ui/core/Button'
 import { BiUpload} from "react-icons/bi";
+import SuccessPopup from '../popup/SuccessPopup/SuccessPopup';
 
 function EducationalLoan(props) {
+    const message="Educational Loan form submitted!!"
     let isRequired=true;
     var date=new Date().toISOString().substr(0,10);
     var loanIssueDate=new Date(Date.now() +  7 * 24 * 60 * 60 * 1000).toISOString().substr(0,10);
@@ -16,15 +17,15 @@ function EducationalLoan(props) {
    const [edLoanButtonPopup,setEdLoanButtonPopup]=useState(false);
    const [loading,setLoading]=useState(false)
     const [edLoanDetails,setEdLoanDetails]=useState({
-        firstName:"",
-        lastName:"",
-        customerId:"",
+        firstName:window.localStorage.getItem("firstName"),
+        lastName:window.localStorage.getItem("lastName"),
+        customerId:window.localStorage.getItem("customerId"),
         loanAmount:null,
         loanApplyDate:date,
         loanIssueDate:loanIssueDate,
-        rateOfInterest:null,
-        durationOfLoan:"5",
-        courseFee:null,
+        rateOfInterest:5,
+        durationOfLoan:5,
+        courseFee:null, 
         course:null,
         fatherName:null,
         fatherOccupation:null,
@@ -32,7 +33,6 @@ function EducationalLoan(props) {
         fatherExperienceInCurrentCompany:null,
         rationCardNumber:null,
         annualIncome:null,
-        
     })
     const handleChange = (e) => {
         const {id , value} = e.target   
@@ -43,14 +43,14 @@ function EducationalLoan(props) {
     } 
 
     const submitHandler=(event)=>{
-        event.preventDefault();
-        if((loanAmountValidate())&&(rateOfInterestValidate())&&(courseFeeValidate())&&(courseValidate())&&
+        event.preventDefault()
+        if((loanAmountValidate())&&(courseFeeValidate())&&(courseValidate())&&
         (fatherNameValidate())&&(fatherOccupationValidate())&&(fatherTotalExperienceValidate())&&
         (fatherExperienceInCurrentCompanyValidate())&&(rationCardNumberValidate())&&(annualIncomeValidate()))
         {       
             setLoading(true)
             axios.post("https://localhost:44313/api/EducationLoans",{
-                customerId:0,
+                customerId:window.localStorage.getItem("customerId"),
                 firstName:edLoanDetails.firstName,
                 lastName:edLoanDetails.lastName,
                 loanAmount:edLoanDetails.loanAmount,
@@ -68,6 +68,7 @@ function EducationalLoan(props) {
                 annualIncome:edLoanDetails.annualIncome
             }).then((response)=>{
                 setEdLoanButtonPopup(true)
+                setLoading(false)
                 console.log(edLoanDetails);
             }).catch(function (error)
             {   
@@ -76,12 +77,11 @@ function EducationalLoan(props) {
                     
                     props.history.push('/error')
                     console.log("server not reponsed")
-                }
+                } 
                 else{
                     console.log("something happened")
                 }
             });
-            setLoading(false)
         }
         else{
             console.log("Not working")
@@ -134,7 +134,7 @@ const fatherExperienceInCurrentCompanyValidate=()=>{
         return true 
     }
     return false
-}
+}  
 const rationCardNumberValidate=()=>{
     if((edLoanDetails.rationCardNumber!=null)&&(edLoanDetails.rationCardNumber>0)){
         return true 
@@ -184,6 +184,7 @@ const pLoan="Click for personal Loan-->"
                             <label style={{"color":"white"}} style={{"color":"white"}} for="firstName"
                             >First Name</label>
                             <input type="text"
+                            style={{"backgroundColor":"darkgrey","color":"white"}}
                              value={edLoanDetails.firstName} onChange={handleChange}
                              name="firstName" 
                              id="firstName"
@@ -200,6 +201,7 @@ const pLoan="Click for personal Loan-->"
                             <input type="text"  name="lastName" id="lastName" className="form-control"
                              value={edLoanDetails.lastName} onChange={handleChange}
                              placeholder="Last name"
+                             style={{"backgroundColor":"darkgrey","color":"white"}}
                              required={isRequired} disabled/>
                             
                         </div>
@@ -211,7 +213,8 @@ const pLoan="Click for personal Loan-->"
                             value={edLoanDetails.customerId} onChange={handleChange}
                             required={isRequired}
                              id="customerId" className="form-control" placeholder="customerId"
-                              required={isRequired} disabled/>
+                              required={isRequired}
+                              style={{"backgroundColor":"darkgrey","color":"white"}} disabled/>
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
@@ -237,7 +240,7 @@ const pLoan="Click for personal Loan-->"
                         <div className="form-group">
                             <label style={{"color":"white"}} for="loanApplyDate">Loan apply Date</label>
                             <input type="date" name="loanApplyDate" id="loanApplyDate" 
-                            defaultValue={date} className="form-control" disabled/>
+                            defaultValue={date} className="form-control" style={{"backgroundColor":"darkgrey","color":"white"}} disabled/>
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
@@ -245,7 +248,7 @@ const pLoan="Click for personal Loan-->"
                             <label style={{"color":"white"}} for="loanIssueDate">Possible Loan issue date</label>
                             <input type="date" name="loanIssueDate" id="loanIssueDate" 
                             value={edLoanDetails.loanIssueDate} onChange={handleChange} 
-                            className="form-control"  required={isRequired}
+                            className="form-control"  required={isRequired} style={{"backgroundColor":"darkgrey","color":"white"}}
                             disabled/>
                         </div>
                     </div>
@@ -253,18 +256,11 @@ const pLoan="Click for personal Loan-->"
 
                     <div className="form-group">
                             <label style={{"color":"white"}} for="rateOfInterest">Rate of Interst in Percentage</label>
-                            <input type="number" name="rateOfInterest"
+                            <input type="text" name="rateOfInterest"
                              id="rateOfInterest" value={edLoanDetails.rateOfInterest} 
                              onChange={handleChange} className="form-control"
-                              placeholder="Rate of interest" required={isRequired} />
-                              {(edLoanDetails.rateOfInterest==null)
-                               ? null
-                               : ((edLoanDetails.rateOfInterest.trim()=="")
-                               ? (<small style={{"color":"red"}}>Rate of interest should not be Empty</small>)
-                               : ((rateOfInterestValidate()
-                               ? (<small style={{"color":"green"}}>Looks good!</small>)
-                               : (<small style={{"color":"red"}}>It should be greater than 2 and lesser than 100</small>)
-                               )))}
+                              placeholder="Rate of interest" required={isRequired} style={{"backgroundColor":"darkgrey","color":"white"}} disabled />
+                              
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
@@ -440,9 +436,9 @@ const pLoan="Click for personal Loan-->"
                 >Submit</Button>
 
                     </div>
-                    <EducationalLoanSuccess trigger={edLoanButtonPopup}>
+                    <SuccessPopup message={message} trigger={edLoanButtonPopup}>
                     
-                    </EducationalLoanSuccess>
+                    </SuccessPopup>
                 </div>  
             </form>
             </div>

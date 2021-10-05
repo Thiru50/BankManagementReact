@@ -45,7 +45,7 @@
     left: 50%;
     bottom: 0;
     height: 2px;
-    background-color: #e74c3c;
+    background-color: rgb(148, 145, 145);
   }
   #navigation-bar a:hover::before {
     right: 0;
