@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React from 'react'
 import './LoanPopup.css'
 import { withRouter } from "react-router-dom";
 import Button from '@material-ui/core/Button'

@@ -17,7 +17,7 @@ function NavBar(props) {
   let perColor=""
   let upColor=""
   const currentPage=history.location.pathname;
-  if (currentPage=='/home'){
+  if (currentPage==='/home'){
      HomeNavBgcolor="rgb(148, 145, 145)"
      UpNavBgcolor=""
      EdNavBgColor=""
@@ -28,7 +28,7 @@ function NavBar(props) {
      upColor=""
 
   }
-  if (currentPage=='/UpdateDetails'){
+  if (currentPage==='/UpdateDetails'){
     HomeNavBgcolor=""
      UpNavBgcolor="rgb(148, 145, 145)"
      EdNavBgColor=""
@@ -38,7 +38,7 @@ function NavBar(props) {
      perColor=""
      upColor="yellow"
  }
- if (currentPage=='/EducationalLoan'){
+ if (currentPage==='/EducationalLoan'){
      HomeNavBgcolor=""
      UpNavBgcolor=""
      EdNavBgColor="rgb(148, 145, 145)"
@@ -48,7 +48,7 @@ function NavBar(props) {
      perColor=""
      upColor=""
 }
-if (currentPage=='/PersonalLoan'){
+if (currentPage==='/PersonalLoan'){
     HomeNavBgcolor=""
      UpNavBgcolor=""
      EdNavBgColor=""

@@ -14,9 +14,7 @@ function LoginForm(props) {
         console.log(Date.now() / 1000)
         props.history.push('/register'); 
     }
-    const redirectToHome = () => {
-      props.history.push('/home'); 
-  }
+    
     const handleChange = (e) => {
         const {id , value} = e.target   
         setState(prevState => ({
@@ -27,7 +25,7 @@ function LoginForm(props) {
     const submitHandler=(event)=>{
         event.preventDefault();
         console.log("button clicked")
-        if((state.userId!="")&&(state.password!=="")){
+        if((state.userId!=="")&&(state.password!=="")){
             console.log("started")
             axios.post("https://localhost:44331/login",{
                 customerId:state.userId,
@@ -66,7 +64,7 @@ function LoginForm(props) {
             }).catch(function (error)
             {   
                 if(error.request){
-                    if(error.request.status==401){
+                    if(error.request.status===401){
                     props.history.push('/InvalidCredentials')
                     console.log(error.request.status)
                     }

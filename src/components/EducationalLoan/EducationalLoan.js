@@ -69,7 +69,7 @@ function EducationalLoan(props) {
             }).then((response)=>{
                 setEdLoanButtonPopup(true)
                 setLoading(false)
-                console.log(edLoanDetails);
+                console.log(response);
             }).catch(function (error)
             {   
                 setLoading(false)
@@ -93,12 +93,7 @@ function EducationalLoan(props) {
       }
       return false
   }
-  const rateOfInterestValidate=()=>{
-      if((edLoanDetails.rateOfInterest!=null)&&((edLoanDetails.rateOfInterest>=2)&&(edLoanDetails.rateOfInterest<=100))){
-          return true
-      }
-      return false
-  }
+  
   const courseFeeValidate=()=>{
       if((edLoanDetails.courseFee!=null)&&(edLoanDetails.courseFee>0)){
           return true
@@ -181,7 +176,7 @@ const pLoan="Click for personal Loan-->"
                 <div className="row my-row">
                     <div className="col-lg-3 my-col "> 
                         <div className="form-group"> 
-                            <label style={{"color":"white"}} style={{"color":"white"}} for="firstName"
+                            <label style={{"color":"white"}}  for="firstName"
                             >First Name</label>
                             <input type="text"
                             style={{"backgroundColor":"darkgrey","color":"white"}}
@@ -213,7 +208,7 @@ const pLoan="Click for personal Loan-->"
                             value={edLoanDetails.customerId} onChange={handleChange}
                             required={isRequired}
                              id="customerId" className="form-control" placeholder="customerId"
-                              required={isRequired}
+                             
                               style={{"backgroundColor":"darkgrey","color":"white"}} disabled/>
                         </div>
                     </div>
@@ -224,9 +219,9 @@ const pLoan="Click for personal Loan-->"
                              id="loanAmount" value={edLoanDetails.loanAmount} 
                              onChange={handleChange} className="form-control"
                               placeholder="Loan Amount" required={isRequired} />
-                              {(edLoanDetails.loanAmount==null)
+                              {(edLoanDetails.loanAmount===null)
                                ? null
-                               : ((edLoanDetails.loanAmount.trim()=="")
+                               : ((edLoanDetails.loanAmount.trim()==="")
                                ? (<small style={{"color":"red"}}>loan Amount should not be Empty</small>)
                                : ((loanAmountValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -285,9 +280,9 @@ const pLoan="Click for personal Loan-->"
                              id="courseFee" value={edLoanDetails.courseFee} 
                              onChange={handleChange} className="form-control"
                               placeholder="Course Fee" required={isRequired} />
-                              {(edLoanDetails.courseFee==null)
+                              {(edLoanDetails.courseFee===null)
                                ? null
-                               : ((edLoanDetails.courseFee.trim()=="")
+                               : ((edLoanDetails.courseFee.trim()==="")
                                ? (<small style={{"color":"red"}}>Course Fee should not be Empty</small>)
                                : ((courseFeeValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -301,9 +296,9 @@ const pLoan="Click for personal Loan-->"
                             <input type="text" name="course" id="course"
                              value={edLoanDetails.course} onChange={handleChange} 
                              className="form-control" placeholder="Course name" required={isRequired}/>
-                             {(edLoanDetails.course==null)
+                             {(edLoanDetails.course===null)
                                ? null
-                               : ((edLoanDetails.course.trim()=="")
+                               : ((edLoanDetails.course.trim()==="")
                                ? (<small style={{"color":"red"}}> Course Name should not be Empty</small>)
                                : ((courseValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -319,9 +314,9 @@ const pLoan="Click for personal Loan-->"
                              placeholder="Father's name"
                              value={edLoanDetails.fatherName} onChange={handleChange}
                              required={isRequired}/>
-                             {(edLoanDetails.fatherName==null)
+                             {(edLoanDetails.fatherName===null)
                                ? null
-                               : ((edLoanDetails.fatherName.trim()=="")
+                               : ((edLoanDetails.fatherName.trim()==="")
                                ? (<small style={{"color":"red"}}>Father's should not be Empty</small>)
                                : ((fatherNameValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -337,9 +332,9 @@ const pLoan="Click for personal Loan-->"
                              placeholder="Father's occupation"
                              value={edLoanDetails.fatherOccupation} onChange={handleChange}
                              required={isRequired}/>
-                             {(edLoanDetails.fatherOccupation==null)
+                             {(edLoanDetails.fatherOccupation===null)
                                ? null
-                               : ((edLoanDetails.fatherOccupation.trim()=="")
+                               : ((edLoanDetails.fatherOccupation.trim()==="")
                                ? (<small style={{"color":"red"}}>Father's Occupation should not be Empty</small>)
                                : ((fatherOccupationValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -357,9 +352,9 @@ const pLoan="Click for personal Loan-->"
                              placeholder="Father's total experience in years"
                              value={edLoanDetails.fatherTotalExperience} onChange={handleChange}
                              required={isRequired}/>
-                             {(edLoanDetails.fatherTotalExperience==null)
+                             {(edLoanDetails.fatherTotalExperience===null)
                                ? null
-                               : ((edLoanDetails.fatherTotalExperience.trim()=="")
+                               : ((edLoanDetails.fatherTotalExperience.trim()==="")
                                ? (<small style={{"color":"red"}}>Father's Total experience should not be Empty</small>)
                                : ((fatherTotalExperienceValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -375,9 +370,9 @@ const pLoan="Click for personal Loan-->"
                              placeholder="Experience in current company"
                              value={edLoanDetails.fatherExperienceInCurrentCompany} onChange={handleChange}
                              required={isRequired}/>
-                             {(edLoanDetails.fatherExperienceInCurrentCompany==null)
+                             {(edLoanDetails.fatherExperienceInCurrentCompany===null)
                                ? null
-                               : ((edLoanDetails.fatherExperienceInCurrentCompany.trim()=="")
+                               : ((edLoanDetails.fatherExperienceInCurrentCompany.trim()==="")
                                ? (<small style={{"color":"red"}}>Father's experience should not be Empty</small>)
                                : ((fatherExperienceInCurrentCompanyValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -393,9 +388,9 @@ const pLoan="Click for personal Loan-->"
                              placeholder="Ration card number"
                              value={edLoanDetails.rationCardNumber} onChange={handleChange}
                              required={isRequired}/>
-                             {(edLoanDetails.rationCardNumber==null)
+                             {(edLoanDetails.rationCardNumber===null)
                                ? null
-                               : ((edLoanDetails.rationCardNumber.trim()=="")
+                               : ((edLoanDetails.rationCardNumber.trim()==="")
                                ? (<small style={{"color":"red"}}>Ration card number should not be Empty</small>)
                                : ((rationCardNumberValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -411,9 +406,9 @@ const pLoan="Click for personal Loan-->"
                              placeholder="Annual Income"
                              value={edLoanDetails.annualIncome} onChange={handleChange}
                              required={isRequired}/>
-                             {(edLoanDetails.annualIncome==null)
+                             {(edLoanDetails.annualIncome===null)
                                ? null
-                               : ((edLoanDetails.annualIncome.trim()=="")
+                               : ((edLoanDetails.annualIncome.trim()==="")
                                ? (<small style={{"color":"red"}}>Annual Income should not be Empty</small>)
                                : ((annualIncomeValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)

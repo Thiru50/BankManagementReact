@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
 } from "react-router-dom";
 import Loading from './components/Loading/Loading';
 import Auth from './components/Auth/Auth';

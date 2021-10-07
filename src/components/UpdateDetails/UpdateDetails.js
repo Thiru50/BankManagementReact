@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {useState} from 'react';
 import './UpdateDetails.css';
 import SuccessPopup from '../popup/SuccessPopup/SuccessPopup';
@@ -41,9 +42,7 @@ function UpdateDetails(props) {
         accHolderNumber:window.localStorage.getItem("accHolderNumber"),
         accHolderAddress:window.localStorage.getItem("accHolderAddress"),
     })
-    const redirectToLogin = () => {
-        props.history.push('/login'); 
-    }
+   
     const handleChange = (e) => {
         const {id , value} = e.target   
         setState(prevState => ({
@@ -58,6 +57,7 @@ function UpdateDetails(props) {
         &&(branchNameValidate())&&(citizenshipValidate())
         &&(accHolderNameValidate())&&(accHolderAddressValidate())&&(accHolderNumberValidate())
         &&(contactNumberValidate())&&(UserNameValidate())&&(idnValidate())){
+            setLoading(true)
             console.log("https://localhost:44331/api/UserDetails/"+window.localStorage.getItem("customerId"))
             axios.put("https://localhost:44331/api/UserDetails/"+window.localStorage.getItem("customerId"),{
                 customerId:window.localStorage.getItem("customerId"),
@@ -87,9 +87,10 @@ function UpdateDetails(props) {
                 registrationDate:window.localStorage.getItem("registrationDate"),
                 citizenStatus:window.localStorage.getItem("citizenStatus")
             }).then((response)=>{
+                setLoading(false)
                 console.log(response.data.customerId)
             }).catch(function (error)
-            {   
+            {   setLoading(false)
                 if(error.request){
                      console.log(error);
                     props.history.push('/error')
@@ -103,19 +104,19 @@ function UpdateDetails(props) {
         setButtonPopup(true)
     }
     const nameValidate=()=>{
-        if((state.name!=null) &&(state.name.search(/[^A-Za-z\s]/) !== -1)){
+        if((state.name!==null) &&(state.name.search(/[^A-Za-z\s]/) !== -1)){
             return false
         }
         return true
     }
     const UserNameValidate=()=>{
-        if((state.userName!=null) &&(state.userName.search(/[^A-Za-z\s]/) !== -1)){
+        if((state.userName!==null) &&(state.userName.search(/[^A-Za-z\s]/) !== -1)){
             return false
         }
         return true
     }
     const passwordValidate=()=>{
-        if((state.password!=null)&&(state.password.length>=8)){
+        if((state.password!==null)&&(state.password.length>=8)){
             return true;
         }
         return false;
@@ -162,12 +163,7 @@ function UpdateDetails(props) {
         }
         return true
     }
-    const citizenStatusValidate=()=>{
-        if(state.citizenStatus.search(/[^A-Za-z\s]/) !== -1){
-            return false
-        }
-        return true
-    } 
+   
     const accHolderNameValidate=()=>{
         if(state.accHolderName.search(/[^A-Za-z\s]/) !== -1){
             return false
@@ -181,23 +177,18 @@ function UpdateDetails(props) {
         return false
     }
     const contactNumberValidate=()=>{
-        if(state.contactNumber.length!=10){
+        if(state.contactNumber.length!==10){
             return false
         }
         return true
     }
     const accHolderNumberValidate=()=>{
-        if(state.accHolderNumber.length!=16){
+        if(state.accHolderNumber.length!==16){
             return false
         }
         return true
     }
-    const idaValidate=()=>{
-        if(((state.accountType=="savings")&&(state.ida>=5000))||((state.accountType=="salary")&&(state.ida>=0))){
-            return true
-        }
-        return false
-    }
+    
     const pancardValidate=()=>{
         let reg=/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
            if(reg.test(state.idn)){
@@ -207,7 +198,7 @@ function UpdateDetails(props) {
         return false
 }
     const aadharValidate=()=>{
-        if(state.idn.length==12){
+        if(state.idn.length===12){
             if (!(isNaN(state.idn))){
                 return true
             }
@@ -215,34 +206,13 @@ function UpdateDetails(props) {
         return false 
     }
     const idnValidate=()=>{
-        if((state.documentType=="pancard")&&(pancardValidate())||(state.documentType=="aadhar")&&(aadharValidate())){
+        if(((state.documentType==="pancard")&&(pancardValidate()))||((state.documentType==="aadhar")&&(aadharValidate()))){
             return true 
         }
         return false
     }
-    const dobValidate=()=>{
-        var now =new Date();                            
-    var currentY= now.getFullYear();                
-    var currentM= now.getMonth();                   
-      
-    var dobget =state.dob; 
-    var dob= new Date(dobget);                             
-    var prevY= dob.getFullYear();                          
-    var prevM= dob.getMonth();                             
-      
-    var ageY =currentY - prevY;
-    var ageM =Math.abs(currentM- prevM);          
-        if((ageY>=18)&&(ageY<96)){
-            return true
-        }
-        return false
-    }
-    const checkidValidate=()=>{
-        if(state.checkid.checked()){
-            return true 
-        }
-        return false
-    }
+    
+    
     return (
         (loading?<Loading/>
             :
@@ -266,7 +236,7 @@ function UpdateDetails(props) {
                 <div className="row my-row">
                     <div className="col-lg-3 my-col "> 
                         <div className="form-group"> 
-                            <label style={{"color":"white"}} style={{"color":"white"}} for="name">Full Name</label>
+                            <label style={{"color":"white"}}  for="name">Full Name</label>
                             <input type="text"
                              value={state.name} onChange={handleChange}
                              name="name" 
@@ -287,7 +257,7 @@ function UpdateDetails(props) {
                             <input type="text"  name="userName" id="userName" className="form-control"
                              value={state.userName} onChange={handleChange}
                              placeholder="Last name"
-                             value={state.userName} onChange={handleChange}
+                             
                              required={isRequired} style={{"backgroundColor":"darkgrey","color":"white"}}
                              disabled/>
                              
@@ -299,11 +269,11 @@ function UpdateDetails(props) {
                             <label style={{"color":"white"}} for="password">Password</label>
                             <input type="password"  name="password"
                             value={state.password} onChange={handleChange}
-                            required={isRequired}
+                           
                              id="password" className="form-control" placeholder="Password" required={isRequired}/>
-                              {(state.password==null||state.password==window.localStorage.getItem("password"))
+                              {(state.password===null||state.password===window.localStorage.getItem("password"))
                                ? null
-                               : ((state.password.trim()=="")
+                               : ((state.password.trim()==="")
                                ? (<small style={{"color":"red"}}>Password should not be Empty</small>)
                                : ((passwordValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -347,7 +317,7 @@ function UpdateDetails(props) {
                             <input type="text" name="address" id="address"
                              value={state.address} onChange={handleChange} 
                              className="form-control" placeholder="Address" required={isRequired}/>
-                             {(state.address==null||state.address==window.localStorage.getItem("address"))
+                             {(state.address===null||state.address===window.localStorage.getItem("address"))
                                ? null
                                : ((addressValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -362,9 +332,9 @@ function UpdateDetails(props) {
                             id="citizenship" value={state.citizenship}
                              onChange={handleChange} className="form-control" 
                              placeholder="CitizenShip" required={isRequired}/>
-                             {(state.citizenship==null||state.citizenship==window.localStorage.getItem("citizenship"))
+                             {(state.citizenship===null||state.citizenship===window.localStorage.getItem("citizenship"))
                                ? null
-                               : ((state.citizenship.trim()=="")
+                               : ((state.citizenship.trim()==="")
                                ? (<small style={{"color":"red"}}>Citizenship should not be Empty</small>)
                                : ((citizenshipValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -382,9 +352,9 @@ function UpdateDetails(props) {
                              id="country" value={state.country} 
                              onChange={handleChange} className="form-control"
                               placeholder="Country" required={isRequired}/>
-                              {(state.country==null||state.country==window.localStorage.getItem("country"))
+                              {(state.country===null||state.country===window.localStorage.getItem("country"))
                                ? null
-                               : ((state.country.trim()=="")
+                               : ((state.country.trim()==="")
                                ? (<small style={{"color":"red"}}> Country should not be Empty</small>)
                                : ((countryValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -398,9 +368,9 @@ function UpdateDetails(props) {
                             <input type="text" name="state" id="state"
                              value={state.state} onChange={handleChange} 
                              className="form-control" placeholder="State" required={isRequired}/>
-                             {(state.state==null||state.state==window.localStorage.getItem("state"))
+                             {(state.state===null||state.state===window.localStorage.getItem("state"))
                                ? null
-                               : ((state.state.trim()=="")
+                               : ((state.state.trim()==="")
                                ? (<small style={{"color":"red"}}> State should not be Empty</small>)
                                : ((stateValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -415,9 +385,9 @@ function UpdateDetails(props) {
                             <input type="text" name="email" id="email" 
                             value={state.email} onChange={handleChange} 
                             className="form-control" placeholder="E-Mail" required={isRequired}/>
-                            {(state.email==null||state.email==window.localStorage.getItem("email"))
+                            {(state.email===null||state.email===window.localStorage.getItem("email"))
                                ? null
-                               : ((state.email.trim()=="")
+                               : ((state.email.trim()==="")
                                ? (<small style={{"color":"red"}}> Email should not be Empty</small>)
                                : ((emailValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -444,9 +414,9 @@ function UpdateDetails(props) {
                              id="contactNumber" value={state.contactNumber} 
                              onChange={handleChange} className="form-control"
                               placeholder="Contact number" required={isRequired} />
-                              {(state.contactNumber==null||state.contactNumber==window.localStorage.getItem("contactNumber"))
+                              {(state.contactNumber===null||state.contactNumber===window.localStorage.getItem("contactNumber"))
                                ? null
-                               : ((state.contactNumber.trim()=="")
+                               : ((state.contactNumber.trim()==="")
                                ? (<small style={{"color":"red"}}>Contact number should not be Empty</small>)
                                : ((contactNumberValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -489,9 +459,9 @@ function UpdateDetails(props) {
                             id="branchName" value={state.branchName} 
                             onChange={handleChange} className="form-control" 
                             placeholder="Branch Name" required={isRequired}/>
-                            {(state.branchName==null||state.branchName==window.localStorage.getItem("branchName"))
+                            {(state.branchName===null||state.branchName===window.localStorage.getItem("branchName"))
                                ? null
-                               : ((state.branchName.trim()=="")
+                               : ((state.branchName.trim()==="")
                                ? (<small style={{"color":"red"}}>Branch name should not be Empty</small>)
                                : ((branchNameValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -515,9 +485,9 @@ function UpdateDetails(props) {
                             value={state.guardianName} onChange={handleChange} 
                             className="form-control" placeholder="Guardian Name"
                             required={isRequired} />
-                            {(state.guardianName==null||state.guardianName==window.localStorage.getItem("guardianName"))
+                            {(state.guardianName===null||state.guardianName===window.localStorage.getItem("guardianName"))
                                ? null
-                               : ((state.guardianName.trim()=="")
+                               : ((state.guardianName.trim()==="")
                                ? (<small style={{"color":"red"}}> Guardian name should not be Empty</small>)
                                : ((guardianNameValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -547,10 +517,10 @@ function UpdateDetails(props) {
                             id="idn" className="form-control" 
                             value={state.idn} onChange={handleChange} 
                             placeholder="Document number" required={isRequired}/>
-                             {(state.idn==null||(state.idn==window.localStorage.getItem("idn")&&
-                             (state.documentType==window.localStorage.getItem("documentType"))))
+                             {(state.idn===null||(state.idn===window.localStorage.getItem("idn")&&
+                             (state.documentType===window.localStorage.getItem("documentType"))))
                                ? null
-                               : ((state.idn.trim()=="")
+                               : ((state.idn.trim()==="")
                                ? (<small style={{"color":"red"}}>Identification document number should not be Empty</small>)
                                : ((idnValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -565,9 +535,9 @@ function UpdateDetails(props) {
                              id="accHolderName" className="form-control"
                             value={state.accHolderName} onChange={handleChange}
                              placeholder="Reference account holder Name" required={isRequired}/>
-                             {(state.accHolderName==null||state.accHolderName==window.localStorage.getItem("accHolderName"))
+                             {(state.accHolderName===null||state.accHolderName===window.localStorage.getItem("accHolderName"))
                                ? null
-                               : ((state.accHolderName.trim()=="")
+                               : ((state.accHolderName.trim()==="")
                                ? (<small style={{"color":"red"}}>Account holder name should not be Empty</small>)
                                : ((accHolderNameValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -582,9 +552,9 @@ function UpdateDetails(props) {
                              id="accHolderNumber" value={state.accHolderNumber} 
                              onChange={handleChange} className="form-control" 
                              placeholder="Reference account holder Number" required={isRequired} />
-                             {(state.accHolderNumber==null||state.accHolderNumber==window.localStorage.getItem("accHolderNumber"))
+                             {(state.accHolderNumber===null||state.accHolderNumber===window.localStorage.getItem("accHolderNumber"))
                                ? null
-                               : ((state.accHolderNumber.trim()=="")
+                               : ((state.accHolderNumber.trim()==="")
                                ? (<small style={{"color":"red"}}>Account holder number should not be Empty</small>)
                                : ((accHolderNumberValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -599,9 +569,9 @@ function UpdateDetails(props) {
                              id="accHolderAddress" value={state.accHolderAddress}
                               onChange={handleChange} className="form-control" 
                               placeholder="Reference account holder address" required={isRequired}/>
-                              {(state.accHolderAddress==null||state.accHolderAddress==window.localStorage.getItem("accHolderAddress"))
+                              {(state.accHolderAddress===null||state.accHolderAddress===window.localStorage.getItem("accHolderAddress"))
                                ? null
-                               : ((state.accHolderAddress.trim()=="")
+                               : ((state.accHolderAddress.trim()==="")
                                ? (<small style={{"color":"red"}}>Account holder address should not be Empty</small>)
                                : ((accHolderAddressValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)

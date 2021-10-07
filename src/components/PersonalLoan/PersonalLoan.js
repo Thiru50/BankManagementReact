@@ -59,7 +59,6 @@ function PersonalLoan(props) {
                 designation:perLoanDetails.designation,
                 yourtotalExperience:perLoanDetails.totalExperience,
                 experienceInCurrentCompany:perLoanDetails.experienceInCurrentCompany,
-               
                 annualIncome:perLoanDetails.annualIncome
             }).then((response)=>{
                 setPerButtonPopup(true)
@@ -89,12 +88,7 @@ function PersonalLoan(props) {
         }
         return false
     }
-    const rateOfInterestValidate=()=>{
-        if((perLoanDetails.rateOfInterest!=null)&&((perLoanDetails.rateOfInterest>=2)&&(perLoanDetails.rateOfInterest<=100))){
-            return true
-        }
-        return false
-    }
+    
     const companyNameValidate=()=>{
         if((perLoanDetails.companyName!=null)&&(perLoanDetails.companyName.search(/[^A-Za-z\s]/)=== -1)){
           return true
@@ -124,7 +118,7 @@ function PersonalLoan(props) {
             return true 
         }
         return false
-    }
+    } 
     const eLoan="Click for Educational Loan-->"
     return (
         (loading?<Loading/>
@@ -156,7 +150,7 @@ function PersonalLoan(props) {
                 <div className="row my-row">
                     <div className="col-lg-3 my-col "> 
                         <div className="form-group"> 
-                            <label style={{"color":"white"}} style={{"color":"white"}} for="firstName">First Name</label>
+                            <label style={{"color":"white"}}  for="firstName">First Name</label>
                             <input type="text"
                              value={perLoanDetails.firstName} onChange={handleChange}
                              name="firstName" 
@@ -175,9 +169,9 @@ function PersonalLoan(props) {
                              placeholder="Annual Income"
                              value={perLoanDetails.annualIncome} onChange={handleChange}
                              required={isRequired}/>
-                             {(perLoanDetails.annualIncome==null)
+                             {(perLoanDetails.annualIncome===null)
                                ? null
-                               : ((perLoanDetails.annualIncome.trim()=="")
+                               : ((perLoanDetails.annualIncome.trim()==="")
                                ? (<small style={{"color":"red"}}>Annual Income should not be Empty</small>)
                                : ((annualIncomeValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -193,7 +187,7 @@ function PersonalLoan(props) {
                             value={perLoanDetails.customerId} onChange={handleChange}
                             required={isRequired}
                              id="customerId" className="form-control" placeholder="customerId"
-                              required={isRequired} style={{"backgroundColor":"darkgrey","color":"white"}} disabled/>
+                             style={{"backgroundColor":"darkgrey","color":"white"}} disabled/>
                         </div>
                     </div>
                     <div className="col-lg-3 my-col">
@@ -203,9 +197,9 @@ function PersonalLoan(props) {
                              id="loanAmount" value={perLoanDetails.loanAmount} 
                              onChange={handleChange} className="form-control"
                               placeholder="Loan Amount" required={isRequired} />
-                              {(perLoanDetails.loanAmount==null)
+                              {(perLoanDetails.loanAmount===null)
                                ? null
-                               : ((perLoanDetails.loanAmount.trim()=="")
+                               : ((perLoanDetails.loanAmount.trim()==="")
                                ? (<small style={{"color":"red"}}>loan Amount should not be Empty</small>)
                                : ((loanAmountValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -263,9 +257,9 @@ function PersonalLoan(props) {
                             <input type="text" name="companyName" id="companyName"
                              value={perLoanDetails.companyName} onChange={handleChange} 
                              className="form-control" placeholder="Company name" required={isRequired}/>
-                             {(perLoanDetails.companyName==null)
+                             {(perLoanDetails.companyName===null)
                                ? null
-                               : ((perLoanDetails.companyName.trim()=="")
+                               : ((perLoanDetails.companyName.trim()==="")
                                ? (<small style={{"color":"red"}}> Company Name should not be Empty</small>)
                                : ((companyNameValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -279,9 +273,9 @@ function PersonalLoan(props) {
                             <input type="text" name="designation" id="designation"
                              value={perLoanDetails.designation} onChange={handleChange} 
                              className="form-control" placeholder="designation" required={isRequired}/>
-                             {(perLoanDetails.designation==null)
+                             {(perLoanDetails.designation===null)
                                ? null
-                               : ((perLoanDetails.designation.trim()=="")
+                               : ((perLoanDetails.designation.trim()==="")
                                ? (<small style={{"color":"red"}}> Designation should not be Empty</small>)
                                : ((designationValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -297,9 +291,9 @@ function PersonalLoan(props) {
                              placeholder="Your total experience in years"
                              value={perLoanDetails.totalExperience} onChange={handleChange}
                              required={isRequired}/>
-                             {(perLoanDetails.totalExperience==null)
+                             {(perLoanDetails.totalExperience===null)
                                ? null
-                               : ((perLoanDetails.totalExperience.trim()=="")
+                               : ((perLoanDetails.totalExperience.trim()==="")
                                ? (<small style={{"color":"red"}}>Your total experience should not be Empty</small>)
                                : ((totalExperienceValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -315,9 +309,9 @@ function PersonalLoan(props) {
                              placeholder="Experience in current company"
                              value={perLoanDetails.experienceInCurrentCompany} onChange={handleChange}
                              required={isRequired}/>
-                             {(perLoanDetails.experienceInCurrentCompany==null)
+                             {(perLoanDetails.experienceInCurrentCompany===null)
                                ? null
-                               : ((perLoanDetails.experienceInCurrentCompany.trim()=="")
+                               : ((perLoanDetails.experienceInCurrentCompany.trim()==="")
                                ? (<small style={{"color":"red"}}>Your's experience should not be Empty</small>)
                                : ((experienceInCurrentCompanyValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {useState} from 'react';
 import r from './RegistrationForm.module.css';
 import { withRouter } from "react-router-dom";
@@ -21,7 +22,7 @@ function RegistrationForm(props)  {
         citizenship:null,
         state:null,
         country:null,
-        email:null,
+        email:null, 
         maritalStatus:"single",
         contactNumber:null,
         dob:null,
@@ -109,85 +110,85 @@ function RegistrationForm(props)  {
         return false
     } 
     const lastNameValidate=()=>{
-        if((state.lastName!=null) &&(state.lastName.search(/[^A-Za-z\s]/) === -1)){
+        if((state.lastName!==null) &&(state.lastName.search(/[^A-Za-z\s]/) === -1)){
             return true
         }
         return false
     }
     const passwordValidate=()=>{
-        if((state.password!=null)&&(state.password.length>=8)){
+        if((state.password!==null)&&(state.password.length>=8)){
             return true;
         }
         return false;
     }
     const guardianNameValidate=()=>{
-        if((state.guardianName!=null) &&(state.guardianName.search(/[^A-Za-z\s]/) === -1)){
+        if((state.guardianName!==null) &&(state.guardianName.search(/[^A-Za-z\s]/) === -1)){
             return true
         }
         return false
     }
     const stateValidate=()=>{
-        if((state.state!=null) &&(state.state.search(/[^A-Za-z\s]/) === -1)){
+        if((state.state!==null) &&(state.state.search(/[^A-Za-z\s]/) === -1)){
             return true
         }
         return false
     }
     const countryValidate=()=>{
-        if((state.country!=null) &&(state.country.search(/[^A-Za-z\s]/) === -1)){
+        if((state.country!==null) &&(state.country.search(/[^A-Za-z\s]/) === -1)){
             return true
         }
         return false
     }
     const addressValidate=()=>{
-        if((state.address!=null) &&(state.address.trim().length>0)){
+        if((state.address!==null) &&(state.address.trim().length>0)){
             return true
         }
         return false
     }
     const emailValidate=()=>{
-        if((state.email!=null)&& (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(state.email)))
-        {
+        if((state.email!==null)&& (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(state.email)))
+        {  
             return true
         } return false
     }
     const citizenshipValidate=()=>{
-        if((state.citizenship!=null)&&(state.citizenship.search(/[^A-Za-z\s]/) === -1)){
+        if((state.citizenship!==null)&&(state.citizenship.search(/[^A-Za-z\s]/) === -1)){
             return true
         }
         return false
     }
     const branchNameValidate=()=>{
-        if((state.branchName!=null)&&(state.branchName.search(/[^A-Za-z\s]/) === -1)){
+        if((state.branchName!==null)&&(state.branchName.search(/[^A-Za-z\s]/) === -1)){
             return true
         }
         return false
     }
     const accHolderNameValidate=()=>{
-        if((state.accHolderName!=null)&&(state.accHolderName.search(/[^A-Za-z\s]/) === -1)){
+        if((state.accHolderName!==null)&&(state.accHolderName.search(/[^A-Za-z\s]/) === -1)){
             return true
         } 
         return false
     }
     const accHolderAddressValidate=()=>{
-        if((state.accHolderAddress!=null)&&(state.accHolderAddress.length>0)){
+        if((state.accHolderAddress!==null)&&(state.accHolderAddress.length>0)){
             return true
         }
         return false
     }
     const contactNumberValidate=()=>{
-        if((state.contactNumber!=null)&&(state.contactNumber.length!=10)){
+        if((state.contactNumber!==null)&&(state.contactNumber.length!==10)){
             return false
         }
         return true
     }
     const accHolderNumberValidate=()=>{
-        if((state.accHolderNumber!=null)&&(state.accHolderNumber.length!=16)){
+        if((state.accHolderNumber!==null)&&(state.accHolderNumber.length!==16)){
             return false
         }
         return true
     }
     const idaValidate=()=>{
-        if(((state.accountType=="savings")&&(state.ida>=5000))||((state.accountType=="salary")&&(state.ida>=0))){
+        if(((state.accountType==="savings")&&(state.ida>=5000))||((state.accountType==="salary")&&(state.ida>=0))){
             return true
         }
         return false
@@ -201,7 +202,7 @@ function RegistrationForm(props)  {
         return false
 }
     const aadharValidate=()=>{
-        if(state.idn.length==12){
+        if(state.idn.length===12){
             if (!(isNaN(state.idn))){
                 return true
             }
@@ -209,7 +210,7 @@ function RegistrationForm(props)  {
         return false 
     }
     const idnValidate=()=>{
-        if((state.documentType=="pancard")&&(pancardValidate())||(state.documentType=="aadhar")&&(aadharValidate())){
+        if(((state.documentType==="pancard")&&(pancardValidate()))||((state.documentType==="aadhar")&&(aadharValidate()))){
             return true 
         }
         return false
@@ -217,15 +218,15 @@ function RegistrationForm(props)  {
     const dobValidate=()=>{
         var now =new Date();                            
     var currentY= now.getFullYear();                
-    var currentM= now.getMonth();                   
+                      
       
     var dobget =state.dob; 
     var dob= new Date(dobget);                             
     var prevY= dob.getFullYear();                          
-    var prevM= dob.getMonth();                             
+                                 
       
     var ageY =currentY - prevY;
-    var ageM =Math.abs(currentM- prevM);  
+     
     if(ageY<18){
         state.citizenStatus="Minor";
     }        
@@ -240,15 +241,14 @@ function RegistrationForm(props)  {
         }
         return false
     }
-    const componentDidMount=()=>{
-        document.body.style.backgroundImage= "url('https://jooinn.com/images/dramatic-landscape-7.jpg')";
+    if(loading){
+        console.log("loading")
     }
     return(
         <div className={r.regdiv}>
             <div style={{
                 "margin":"1px 80px",
                 
-
         }}>
             <div className={r.regcontainer}>
         <div className="row">
@@ -261,9 +261,9 @@ function RegistrationForm(props)  {
                 <div className="d-flex justify-content-end align-items-center">
             <span className={r.already}
             style={{"color":"yellow"}}> Already have account?</span>
-            <Button 
+            <Button  
                     type="submit" 
-                    variant="contained"
+                    variant="contained"  
             color="primary"
                     endIcon={<VpnKey/>}
                     className={`btn btn-primary ${r.btnLogin}`}
@@ -277,7 +277,7 @@ function RegistrationForm(props)  {
                     <div className="col-lg-3 my-col"> 
                         <div className="form-group"> 
                         
-                            <label style={{"color":"white"}} style={{"color":"white"}} for="firstName">First Name</label>
+                            <label style={{"color":"white"}} for="firstName">First Name</label>
                             
                             <input type="text"
                              value={state.firstName} onChange={handleChange}
@@ -287,9 +287,9 @@ function RegistrationForm(props)  {
                              placeholder="First Name"
                              required={isRequired}
                               />
-                              {(state.firstName==null)
+                              {(state.firstName===null)
                                ? null
-                               : ((state.firstName.trim()=="")
+                               : ((state.firstName.trim()==="")
                                ? (<small style={{"color":"red"}}>Name should not be Empty</small>)
                                : ((firstNameValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -304,11 +304,11 @@ function RegistrationForm(props)  {
                             <input type="text"  name="lastName" id="lastName" className="form-control"
                              value={state.lastName} onChange={handleChange}
                              placeholder="second name"
-                             value={state.lastName} onChange={handleChange}
+                              
                              required={isRequired}/>
-                             {(state.lastName==null)
+                             {(state.lastName===null)
                                ? null
-                               : ((state.lastName.trim()=="")
+                               : ((state.lastName.trim()==="")
                                ? (<small style={{"color":"red"}}>User name should not be Empty</small>)
                                : ((lastNameValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -322,11 +322,11 @@ function RegistrationForm(props)  {
                             <label style={{"color":"white"}} for="password">Password</label>
                             <input type="password"  name="password"
                             value={state.password} onChange={handleChange}
-                            required={isRequired}
+                            
                              id="password" className="form-control" placeholder="Password" required={isRequired}/>
-                              {(state.password==null)
+                              {(state.password===null)
                                ? null
-                               : ((state.password.trim()=="")
+                               : ((state.password.trim()==="")
                                ? (<small style={{"color":"red"}}>Password should not be Empty</small>)
                                : ((passwordValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -362,9 +362,9 @@ function RegistrationForm(props)  {
                             value={state.guardianName} onChange={handleChange} 
                             className="form-control" placeholder="Guardian Name"
                             required={isRequired} />
-                            {(state.guardianName==null)
+                            {(state.guardianName===null)
                                ? null
-                               : ((state.guardianName.trim()=="")
+                               : ((state.guardianName.trim()==="")
                                ? (<small style={{"color":"red"}}> Guardian name should not be Empty</small>)
                                : ((guardianNameValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -378,7 +378,7 @@ function RegistrationForm(props)  {
                             <input type="text" name="address" id="address"
                              value={state.address} onChange={handleChange} 
                              className="form-control" placeholder="Address" required={isRequired}/>
-                             {(state.address==null)
+                             {(state.address===null)
                                ? null
                                : ((addressValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -393,9 +393,9 @@ function RegistrationForm(props)  {
                             id="citizenship" value={state.citizenship}
                              onChange={handleChange} className="form-control" 
                              placeholder="CitizenShip" required={isRequired}/>
-                             {(state.citizenship==null)
+                             {(state.citizenship===null)
                                ? null
-                               : ((state.citizenship.trim()=="")
+                               : ((state.citizenship.trim()==="")
                                ? (<small style={{"color":"red"}}>Citizenship should not be Empty</small>)
                                : ((citizenshipValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -413,9 +413,9 @@ function RegistrationForm(props)  {
                              id="country" value={state.country} 
                              onChange={handleChange} className="form-control"
                               placeholder="Country" required={isRequired}/>
-                              {(state.country==null)
+                              {(state.country===null)
                                ? null
-                               : ((state.country.trim()=="")
+                               : ((state.country.trim()==="")
                                ? (<small style={{"color":"red"}}> Country should not be Empty</small>)
                                : ((countryValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -429,9 +429,9 @@ function RegistrationForm(props)  {
                             <input type="text" name="state" id="state"
                              value={state.state} onChange={handleChange} 
                              className="form-control" placeholder="State" required={isRequired}/>
-                             {(state.state==null)
+                             {(state.state===null)
                                ? null
-                               : ((state.state.trim()=="")
+                               : ((state.state.trim()==="")
                                ? (<small style={{"color":"red"}}> State should not be Empty</small>)
                                : ((stateValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -446,9 +446,9 @@ function RegistrationForm(props)  {
                             <input type="text" name="email" id="email" 
                             value={state.email} onChange={handleChange} 
                             className="form-control" placeholder="E-Mail" required={isRequired}/>
-                            {(state.email==null)
+                            {(state.email===null)
                                ? null
-                               : ((state.email.trim()=="")
+                               : ((state.email.trim()==="")
                                ? (<small style={{"color":"red"}}> Email should not be Empty</small>)
                                : ((emailValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -475,9 +475,9 @@ function RegistrationForm(props)  {
                              id="contactNumber" value={state.contactNumber} 
                              onChange={handleChange} className="form-control"
                               placeholder="Contact number" required={isRequired} />
-                              {(state.contactNumber==null)
+                              {(state.contactNumber===null)
                                ? null
-                               : ((state.contactNumber.trim()=="")
+                               : ((state.contactNumber.trim()==="")
                                ? (<small style={{"color":"red"}}>Contact number should not be Empty</small>)
                                : ((contactNumberValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -491,9 +491,9 @@ function RegistrationForm(props)  {
                             <input type="date" name="dob" id="dob" 
                             value={state.dob} onChange={handleChange} 
                             className="form-control" max={date} required={isRequired}/>
-                            {(state.dob==null)
+                            {(state.dob===null)
                                ? null
-                               : ((state.dob=="")
+                               : ((state.dob==="")
                                ? (<small style={{"color":"red"}}>Date of Birth should not be Empty</small>)
                                : ((dobValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -525,9 +525,9 @@ function RegistrationForm(props)  {
                             id="branchName" value={state.branchName} 
                             onChange={handleChange} className="form-control" 
                             placeholder="Branch Name" required={isRequired}/>
-                            {(state.branchName==null)
+                            {(state.branchName===null)
                                ? null
-                               : ((state.branchName.trim()=="")
+                               : ((state.branchName.trim()==="")
                                ? (<small style={{"color":"red"}}>Branch name should not be Empty</small>)
                                : ((branchNameValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -549,9 +549,9 @@ function RegistrationForm(props)  {
                             <input type="number" name="ida" id="ida" className="form-control"
                              value={state.ida} onChange={handleChange}
                               placeholder="Initial deposit Amount" required={isRequired}/>
-                              {(state.ida==null)
+                              {(state.ida===null)
                                ? null
-                               : ((state.ida.trim()=="")
+                               : ((state.ida.trim()==="")
                                ? (<small style={{"color":"red"}}>Initial deposit amount should not be Empty</small>)
                                : ((idaValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -580,9 +580,9 @@ function RegistrationForm(props)  {
                             id="idn" className="form-control" 
                             value={state.idn} onChange={handleChange} 
                             placeholder="Document number" required={isRequired}/>
-                             {(state.idn==null)
+                             {(state.idn===null)
                                ? null
-                               : ((state.idn.trim()=="")
+                               : ((state.idn.trim()==="")
                                ? (<small style={{"color":"red"}}>Identification document number should not be Empty</small>)
                                : ((idnValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -597,9 +597,9 @@ function RegistrationForm(props)  {
                              id="accHolderName" className="form-control"
                             value={state.accHolderName} onChange={handleChange}
                              placeholder="Reference account holder Name" required={isRequired}/>
-                             {(state.accHolderName==null)
+                             {(state.accHolderName===null)
                                ? null
-                               : ((state.accHolderName.trim()=="")
+                               : ((state.accHolderName.trim()==="")
                                ? (<small style={{"color":"red"}}>Account holder name should not be Empty</small>)
                                : ((accHolderNameValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -614,9 +614,9 @@ function RegistrationForm(props)  {
                              id="accHolderNumber" value={state.accHolderNumber} 
                              onChange={handleChange} className="form-control" 
                              placeholder="Reference account holder Number" required={isRequired}/>
-                             {(state.accHolderNumber==null)
+                             {(state.accHolderNumber===null)
                                ? null
-                               : ((state.accHolderNumber.trim()=="")
+                               : ((state.accHolderNumber.trim()==="")
                                ? (<small style={{"color":"red"}}>Account holder number should not be Empty</small>)
                                : ((accHolderNumberValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
@@ -631,9 +631,9 @@ function RegistrationForm(props)  {
                              id="accHolderAddress" value={state.accHolderAddress}
                               onChange={handleChange} className="form-control" 
                               placeholder="Reference account holder address" required={isRequired}/>
-                              {(state.accHolderAddress==null)
+                              {(state.accHolderAddress===null)
                                ? null
-                               : ((state.accHolderAddress.trim()=="")
+                               : ((state.accHolderAddress.trim()==="")
                                ? (<small style={{"color":"red"}}>Account holder address should not be Empty</small>)
                                : ((accHolderAddressValidate()
                                ? (<small style={{"color":"green"}}>Looks good!</small>)
